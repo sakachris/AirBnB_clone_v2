@@ -8,7 +8,7 @@ from os import getenv
 # from models import storage
 
 
-class State(BaseModel):
+class State(BaseModel, Base):
     """ State class """
 
     __tablename__ = "states"
