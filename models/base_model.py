@@ -31,18 +31,24 @@ class BaseModel:
             del kwargs['__class__']
             self.__dict__.update(kwargs)"""
             attr = {k: v for k, v in kwargs.items() if k != '__class__'}
-            for key, val in attr.items():
-                if key in ['created_at', 'updated_at']:
-                    dt_obj = datetime.strptime(val, '%Y-%m-%dT%H:%M:%S.%f')
-                    setattr(self, key, dt_obj)
-                else:
-                    setattr(self, key, val)
             if 'id' not in attr:
                 self.id = str(uuid4())
             if 'created_at' not in attr:
                 self.created_at = datetime.now()
             if 'update_at' not in attr:
                 self.updated_at = datetime.now()
+            for key, val in attr.items():
+                if key in ['created_at', 'updated_at']:
+                    dt_obj = datetime.strptime(val, '%Y-%m-%dT%H:%M:%S.%f')
+                    setattr(self, key, dt_obj)
+                else:
+                    setattr(self, key, val)
+            """if 'id' not in attr:
+                self.id = str(uuid4())
+            if 'created_at' not in attr:
+                self.created_at = datetime.now()
+            if 'update_at' not in attr:
+                self.updated_at = datetime.now()"""
 
     def __str__(self):
         """Returns a string representation of the instance"""
