@@ -8,8 +8,9 @@ from sqlalchemy import create_engine
 from models.base_model import Base
 from models.state import State
 from models.city import City
+from models.user import User
 
-cls_dt = {"State": State, "City": City}
+cls_dt = {"State": State, "City": City, "User": User}
 
 
 class DBStorage:
