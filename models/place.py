@@ -9,7 +9,8 @@ from os import getenv
 place_amenity = Table("place_amenity", Base.metadata,
                       Column('place_id', String(60), ForeignKey('places.id'),
                              nullable=False, primary_key=True),
-                      Column('amenity_id', String(60), ForeignKey('amenities.id'),
+                      Column('amenity_id', String(60),
+                             ForeignKey('amenities.id'),
                              nullable=False, primary_key=True))
 
 
@@ -33,7 +34,8 @@ class Place(BaseModel, Base):
         reviews = relationship('Review', cascade='all, delete-orphan',
                                backref='place')
         amenities = relationship("Amenity", secondary=place_amenity,
-                                 viewonly=False, back_populates="place_amenities")
+                                 viewonly=False,
+                                 back_populates="place_amenities")
     else:
         city_id = ""
         user_id = ""
