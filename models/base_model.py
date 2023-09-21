@@ -26,8 +26,6 @@ class BaseModel:
                 self.id = str(uuid.uuid4())
             if 'created_at' not in attr:
                 self.created_at = self.updated_at = datetime.now()
-            # if 'update_at' not in attr:
-                # self.updated_at = datetime.now()
             for key, val in attr.items():
                 if key in ['created_at', 'updated_at']:
                     dt_obj = datetime.strptime(val, '%Y-%m-%dT%H:%M:%S.%f')

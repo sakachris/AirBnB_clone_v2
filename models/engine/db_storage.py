@@ -13,9 +13,6 @@ from models.place import Place
 from models.review import Review
 from models.amenity import Amenity
 
-"""cls_dt = {"State": State, "City": City, "User": User, "Place": Place,
-          "Review": Review, "Amenity": Amenity}"""
-
 
 class DBStorage:
     """
@@ -47,15 +44,11 @@ class DBStorage:
 
         dtb = {}
         if cls:
-            """if isinstance(cls, str):
-                cls = eval(cls)"""
             for obj in self.__session.query(cls).all():
                 key = f"{obj.__class__.__name__}.{obj.id}"
                 dtb[key] = obj
         else:
-            # for cl in cls_dt.keys():
             for cl in cls_lst:
-                # for obj in self.__session.query(cls_dt[cl]):
                 for obj in self.__session.query(cl).all():
                     key = f"{obj.__class__.__name__}.{obj.id}"
                     dtb[key] = obj

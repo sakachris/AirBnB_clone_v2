@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" Module for testing file storage"""
+""" Module for testing database storage"""
 from models import storage
 import unittest
 from models.base_model import BaseModel, Base
