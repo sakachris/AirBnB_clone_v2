@@ -3,7 +3,7 @@
 Fabric script that generates a .tgz archive
 from the contents of the web_static folder
 """
-from fabric.api import local, env, put, run
+from fabric.api import local, env, put, run, cd
 from datetime import datetime
 import os
 
@@ -37,10 +37,8 @@ def do_deploy(archive_path):
         return False
 
     try:
-        # fname = os.path.basename(archive_path)
-        fname = archive_path.split("/")[-1]
-        # name = fname.replace('.tgz', '')
-        name = fname.split(".")[0]
+        fname = os.path.basename(archive_path)
+        name = fname.replace('.tgz', '')
         path = f"/data/web_static/releases/{name}/"
 
         # load archive to server
@@ -70,3 +68,39 @@ def do_deploy(archive_path):
         return True
     except Exception:
         return False
+
+
+def deploy():
+    """
+    creates and distributes an archive to web servers
+    """
+    archive_path = do_pack()
+    if not archive_path or not os.path.isfile(archive_path):
+        return False
+    return do_deploy(archive_path)
+
+
+def do_clean(number=0):
+    """
+    deletes out-of-date archives
+    """
+    number = int(number)
+    if number == 0:
+        number == 1
+
+    version = './versions/'
+    release = '/data/web_static/releases'
+
+    with cd(version):
+        a = run('ls -t').split()
+        to_del = a[number:]
+
+        for i in to_del:
+            run(f"rm -f {i}")
+
+    if exists(release):
+        with cd(release):
+            rel = run('ls -t').split()
+            r_del = rel[number:]
+            for r in r_del:
+                run(f"rm -rf {r}")
