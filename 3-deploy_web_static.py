@@ -70,7 +70,6 @@ def do_deploy(archive_path):
         return False
 
 
-@runs_once
 def deploy():
     """
     creates and distributes an archive to web servers
