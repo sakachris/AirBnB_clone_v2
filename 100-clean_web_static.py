@@ -70,6 +70,7 @@ def do_deploy(archive_path):
         return False
 
 
+@runs_once
 def deploy():
     """
     creates and distributes an archive to web servers
@@ -91,7 +92,7 @@ def do_clean(number=0):
     version = './versions/'
     release = '/data/web_static/releases'
 
-    with cd(version):
+    with cd.local(version):
         a = run('ls -t').split()
         to_del = a[number:]
 
@@ -99,7 +100,7 @@ def do_clean(number=0):
             run(f"rm -f {i}")
 
     if exists(release):
-        with cd(release):
+        with cd.local(release):
             rel = run('ls -t').split()
             r_del = rel[number:]
             for r in r_del:
