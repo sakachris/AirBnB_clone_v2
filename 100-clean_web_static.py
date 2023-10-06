@@ -88,17 +88,17 @@ def do_clean(number=0):
     if number == 0:
         number == 1
 
-    version = './versions/'
-    release = '/data/web_static/releases'
+    # version = './versions/'
+    # release = '/data/web_static/releases'
 
-    with cd.local(version):
+    with cd.local('./versions/'):
         a = run('ls -t').split()
         to_del = a[number:]
 
         for i in to_del:
             run(f"rm -f {i}")
 
-    if exists(release):
+    if exists('/data/web_static/releases'):
         with cd.local(release):
             rel = run('ls -t').split()
             r_del = rel[number:]
